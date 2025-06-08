@@ -1,0 +1,2 @@
+# -rnek-sorular
+Örnek-sorular
