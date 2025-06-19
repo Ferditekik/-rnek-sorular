@@ -223,3 +223,221 @@ class _AnaEkranState extends State<AnaEkran> {
     );
   }
 }
+
+## Snake bar
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: const HomePage(),
+    );
+  }
+}
+
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Snackbar Örneği'),
+        centerTitle: true,
+        backgroundColor: Colors.teal,
+      ),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            // Snackbar'ı göster
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Butona tıkladın!'),
+                duration: Duration(seconds: 2),
+                backgroundColor: Colors.teal,
+              ),
+            );
+          },
+          child: const Text('Snackbar Göster'),
+        ),
+      ),
+    );
+  }
+}
+
+
+##Kaydırmalı Sekme
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: TrendyolStyleTabs(),
+    );
+  }
+}
+
+class TrendyolStyleTabs extends StatefulWidget {
+  @override
+  _TrendyolStyleTabsState createState() => _TrendyolStyleTabsState();
+}
+
+class _TrendyolStyleTabsState extends State<TrendyolStyleTabs>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+
+  final List<String> categories = [
+    'Kadın',
+    'Erkek',
+    'Çocuk',
+    'Spor',
+    'Elektronik',
+    'Ev & Yaşam',
+    'Kozmetik',
+    'Süpermarket',
+    'Kitap',
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: categories.length, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Trendyol Tarzı Sekmeler'),
+        bottom: TabBar(
+          isScrollable: true, // Kaydırma özelliği
+          controller: _tabController,
+          tabs: categories.map((category) => Tab(text: category)).toList(),
+        ),
+      ),
+      body: TabBarView(
+        controller: _tabController,
+        children: categories.map((category) {
+          return Center(
+            child: Text(
+              '$category Sayfası',
+              style: TextStyle(fontSize: 24),
+            ),
+          );
+        }).toList(),
+      ),
+    );
+  }
+}
+
+##Sayaç
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: const CounterPage(),
+    );
+  }
+}
+
+class CounterPage extends StatefulWidget {
+  const CounterPage({super.key});
+
+  @override
+  State<CounterPage> createState() => _CounterPageState();
+}
+
+class _CounterPageState extends State<CounterPage> {
+  int _counter = 0;
+
+  void _increment() {
+    setState(() {
+      _counter++;
+    });
+  }
+
+  void _decrement() {
+    setState(() {
+      _counter--;
+    });
+  }
+
+  void _reset() {
+    setState(() {
+      _counter = 0;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Sayaç Uygulaması'),
+        centerTitle: true,
+        backgroundColor: Colors.deepPurple,
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Text(
+            'Sayacın değeri:',
+            style: TextStyle(fontSize: 24),
+          ),
+          Text(
+            '$_counter',
+            style: const TextStyle(fontSize: 48, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 30),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: _increment,
+                child: const Text('+ Artır'),
+              ),
+              const SizedBox(width: 10),
+              ElevatedButton(
+                onPressed: _decrement,
+                child: const Text('- Azalt'),
+              ),
+              const SizedBox(width: 10),
+              ElevatedButton(
+                onPressed: _reset,
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                child: const Text('Sıfırla'),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
